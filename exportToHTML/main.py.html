@@ -1,0 +1,268 @@
+<html>
+<head>
+<title>main.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #808080;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #cc7832;}
+.s3 { color: #6897bb;}
+.s4 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+main.py</font>
+</center></td></tr></table>
+<pre><span class="s0">#1. Write a Python program to compute the eigenvalues and right eigenvectors of a given square array.</span>
+<span class="s2">from </span><span class="s1">functools </span><span class="s2">import </span><span class="s1">reduce</span>
+<span class="s0"># Given Square Matrix</span>
+<span class="s1">A = ([[</span><span class="s3">5</span><span class="s2">, </span><span class="s1">-</span><span class="s3">3</span><span class="s1">]</span><span class="s2">,</span>
+      <span class="s1">[-</span><span class="s3">6</span><span class="s2">, </span><span class="s3">2</span><span class="s1">]])</span>
+
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">A:&quot;</span><span class="s1">)</span>
+<span class="s0">##</span>
+<span class="s0">## A:</span>
+<span class="s2">for </span><span class="s1">m </span><span class="s2">in </span><span class="s1">A:</span>
+    <span class="s1">print(m)</span>
+
+<span class="s0"># Identity</span>
+<span class="s0">## [5, -3]</span>
+<span class="s0">## [-6, 2]</span>
+<span class="s1">I = ([[</span><span class="s3">1</span><span class="s2">, </span><span class="s3">0</span><span class="s1">]</span><span class="s2">, </span><span class="s1">[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">1</span><span class="s1">]])</span>
+
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">I:&quot;</span><span class="s1">)</span>
+
+<span class="s0">## I:</span>
+<span class="s2">for </span><span class="s1">m </span><span class="s2">in </span><span class="s1">I:</span>
+    <span class="s1">print(m)</span>
+
+<span class="s0"># A Transpose A</span>
+<span class="s0">## [1, 0]</span>
+<span class="s0">## [0, 1]</span>
+<span class="s1">AxI = ([[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">0</span><span class="s1">]</span><span class="s2">,</span>
+        <span class="s1">[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">0</span><span class="s1">]])</span>
+
+<span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(A)):</span>
+    <span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(len(I[</span><span class="s3">0</span><span class="s1">])):</span>
+        <span class="s2">for </span><span class="s1">k </span><span class="s2">in </span><span class="s1">range(len(I)):</span>
+            <span class="s1">AxI[i][j] += A[i][k] * I[k][j]</span>
+
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">AxI:&quot;</span><span class="s1">)</span>
+<span class="s0">##</span>
+<span class="s0">## AxI:</span>
+<span class="s2">for </span><span class="s1">m </span><span class="s2">in </span><span class="s1">AxI:</span>
+    <span class="s1">print(AxI)</span>
+<span class="s0">## [[5, -3], [-6, 2]]</span>
+<span class="s0">## [[5, -3], [-6, 2]]</span>
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">Factor:&quot;</span><span class="s1">)</span>
+<span class="s0">##</span>
+<span class="s0">## Factor:</span>
+<span class="s1">lamda = ([[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">0</span><span class="s1">]</span><span class="s2">,</span>
+          <span class="s1">[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">0</span><span class="s1">]])</span>
+
+<span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(AxI)):</span>
+    <span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(len(AxI)):</span>
+        <span class="s0"># factor[i][j] = AxI[i][j]</span>
+        <span class="s1">lamda[i][i] = (</span><span class="s4">&quot;x&quot;</span><span class="s1">.format(AxI[i][i]))</span>
+
+<span class="s1">print(</span><span class="s4">'</span><span class="s2">\n</span><span class="s4">= ({0} - {1})({2} - {3}) - ({4})({5})=0'</span><span class="s1">.format(AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]</span><span class="s2">, </span><span class="s1">lamda[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]</span><span class="s2">, </span><span class="s1">AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">lamda[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]</span><span class="s2">,</span>
+                                                         <span class="s1">AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]))</span>
+<span class="s0">##</span>
+<span class="s0">## = (5 - x)(2 - x) - (-6)(-3)=0</span>
+<span class="s1">print(</span><span class="s4">'</span><span class="s2">\n</span><span class="s4">= ({0} - {1})({2} - {3}) - {4} = 0'</span><span class="s1">.format(AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]</span><span class="s2">, </span><span class="s1">lamda[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]</span><span class="s2">, </span><span class="s1">AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">lamda[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">,</span>
+                                                    <span class="s1">AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] * AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]))</span>
+<span class="s0">##</span>
+<span class="s0">## = (5 - x)(2 - x) - 18 = 0</span>
+<span class="s1">id_count = </span><span class="s3">0  </span><span class="s0"># number of identities</span>
+<span class="s1">coeff = </span><span class="s3">0  </span><span class="s0"># coefficient</span>
+<span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(lamda)):</span>
+    <span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(len(lamda)):</span>
+        <span class="s2">if </span><span class="s1">(lamda[i][j] == </span><span class="s4">&quot;x&quot;</span><span class="s1">):</span>
+            <span class="s1">id_count = id_count + </span><span class="s3">1</span>
+            <span class="s1">coeff = (</span><span class="s4">&quot;x^{0}&quot;</span><span class="s1">.format(id_count))</span>
+
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">= {0}{1}{2}+{3} - {4} = 0&quot;</span><span class="s1">.format(coeff</span><span class="s2">, </span><span class="s1">-AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] - AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">lamda[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">(-AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]) * (-AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">])</span><span class="s2">,</span>
+                                           <span class="s1">(-AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]) * (-AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">1</span><span class="s1">])))</span>
+<span class="s0">##</span>
+<span class="s0">## = x^2-7x+10 - 18 = 0</span>
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">= {0}{1}{2}+{3} = 0&quot;</span><span class="s1">.format(coeff</span><span class="s2">, </span><span class="s1">-AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] - AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">lamda[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">,</span>
+                                     <span class="s1">((-AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]) * (-AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">])) - ((-AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]) * (-AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]))))</span>
+<span class="s0">##</span>
+<span class="s0">## = x^2-7x+-8 = 0</span>
+<span class="s1">factor1 = (-AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] - AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">])</span>
+
+<span class="s1">determinant = (((-AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]) * (-AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">])) - ((-AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]) * (-AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">1</span><span class="s1">])))</span>
+
+<span class="s1">factor1 = determinant - factor1</span>
+
+<span class="s1">print(factor1)</span>
+<span class="s0">## -1</span>
+<span class="s1">print(determinant)</span>
+<span class="s0">## -8</span>
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">Eigen Values:&quot;</span><span class="s1">)</span>
+<span class="s0">##</span>
+<span class="s0">## Eigen Values:</span>
+<span class="s1">print(</span><span class="s4">&quot;(x + ({0}))(x + ({1}))&quot;</span><span class="s1">.format(factor1</span><span class="s2">, </span><span class="s1">determinant))</span>
+<span class="s0">## (x + (-1))(x + (-8))</span>
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">Eigen Vector&quot;</span><span class="s1">)</span>
+<span class="s0">##</span>
+<span class="s0">## Eigen Vector</span>
+<span class="s1">eval1 = AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] - (factor1)</span>
+<span class="s1">eval2 = AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">] - (factor1)</span>
+
+<span class="s1">print(eval1)</span>
+<span class="s0">## 6</span>
+<span class="s1">print(eval2)</span>
+<span class="s0">## 3</span>
+<span class="s1">eiganVector1 = AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">1</span><span class="s1">] / eval2</span>
+
+<span class="s1">eiganVector2 = AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] / eval2</span>
+
+<span class="s1">print(</span><span class="s4">&quot;Eigan vectors are: {0} and {1}&quot;</span><span class="s1">.format(eiganVector1</span><span class="s2">, </span><span class="s1">eiganVector2))</span>
+<span class="s0">## Eigan vectors are: -1.0 and -2.0</span>
+
+
+<span class="s0"># 2. Write a Python program to compute the factor of a given array by Singular Value Decomposition</span>
+<span class="s2">from </span><span class="s1">functools </span><span class="s2">import </span><span class="s1">reduce</span>
+
+<span class="s0"># Given Square Matrix</span>
+<span class="s1">A = ([[</span><span class="s3">5</span><span class="s2">, </span><span class="s1">-</span><span class="s3">3</span><span class="s1">]</span><span class="s2">,</span>
+      <span class="s1">[-</span><span class="s3">6</span><span class="s2">, </span><span class="s3">2</span><span class="s1">]])</span>
+
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">A:&quot;</span><span class="s1">)</span>
+<span class="s0">##</span>
+<span class="s0">## A:</span>
+<span class="s2">for </span><span class="s1">m </span><span class="s2">in </span><span class="s1">A:</span>
+    <span class="s1">print(m)</span>
+
+<span class="s0"># Transpose</span>
+<span class="s0">## [5, -3]</span>
+<span class="s0">## [-6, 2]</span>
+<span class="s1">T = ([[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">0</span><span class="s1">]</span><span class="s2">,</span>
+      <span class="s1">[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">0</span><span class="s1">]])</span>
+
+<span class="s0"># Transpose Matrix</span>
+<span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(A)):</span>
+    <span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(len(T)):</span>
+        <span class="s1">T[i][j] += A[j][i]</span>
+
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">T:&quot;</span><span class="s1">)</span>
+<span class="s0">##</span>
+<span class="s0">## T:</span>
+<span class="s2">for </span><span class="s1">m </span><span class="s2">in </span><span class="s1">T:</span>
+    <span class="s1">print(m)</span>
+
+<span class="s0"># A Transpose A</span>
+<span class="s0">## [5, -6]</span>
+<span class="s0">## [-3, 2]</span>
+<span class="s1">ATA = ([[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">0</span><span class="s1">]</span><span class="s2">,</span>
+        <span class="s1">[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">0</span><span class="s1">]])</span>
+
+<span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(A)):</span>
+    <span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(len(T[</span><span class="s3">0</span><span class="s1">])):</span>
+        <span class="s2">for </span><span class="s1">k </span><span class="s2">in </span><span class="s1">range(len(T)):</span>
+            <span class="s1">ATA[i][j] += A[i][k] * T[k][j]</span>
+
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">ATA - A Transpose A:&quot;</span><span class="s1">)</span>
+<span class="s0">##</span>
+<span class="s0">## ATA - A Transpose A:</span>
+<span class="s2">for </span><span class="s1">m </span><span class="s2">in </span><span class="s1">ATA:</span>
+    <span class="s1">print(ATA)</span>
+<span class="s0">## [[34, -36], [-36, 40]]</span>
+<span class="s0">## [[34, -36], [-36, 40]]</span>
+<span class="s1">print(</span><span class="s4">&quot;factor:&quot;</span><span class="s1">)</span>
+<span class="s0">## factor:</span>
+<span class="s1">lamda = ([[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">0</span><span class="s1">]</span><span class="s2">,</span>
+          <span class="s1">[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">0</span><span class="s1">]])</span>
+
+<span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(ATA)):</span>
+    <span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(len(ATA)):</span>
+        <span class="s0"># factor[i][j] = AxI[i][j]</span>
+        <span class="s1">lamda[i][i] = (</span><span class="s4">&quot;x&quot;</span><span class="s1">.format(ATA[i][i]))</span>
+
+<span class="s1">print(</span><span class="s4">'</span><span class="s2">\n</span><span class="s4">= ({0} - {1})({2} - {3}) - ({4})({5})=0'</span><span class="s1">.format(ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]</span><span class="s2">, </span><span class="s1">lamda[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]</span><span class="s2">, </span><span class="s1">ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">lamda[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]</span><span class="s2">,</span>
+                                                         <span class="s1">ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]))</span>
+<span class="s0">##</span>
+<span class="s0">## = (34 - x)(40 - x) - (-36)(-36)=0</span>
+<span class="s1">print(</span><span class="s4">'</span><span class="s2">\n</span><span class="s4">= ({0} - {1})({2} - {3}) - {4} = 0'</span><span class="s1">.format(ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]</span><span class="s2">, </span><span class="s1">lamda[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]</span><span class="s2">, </span><span class="s1">ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">lamda[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">,</span>
+                                                    <span class="s1">ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] * ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]))</span>
+<span class="s0">##</span>
+<span class="s0">## = (34 - x)(40 - x) - 1296 = 0</span>
+<span class="s1">id_count = </span><span class="s3">0  </span><span class="s0"># number of identities</span>
+<span class="s1">coeff = </span><span class="s3">0  </span><span class="s0"># coefficient</span>
+<span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(lamda)):</span>
+    <span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(len(lamda)):</span>
+        <span class="s2">if </span><span class="s1">(lamda[i][j] == </span><span class="s4">&quot;x&quot;</span><span class="s1">):</span>
+            <span class="s1">id_count = id_count + </span><span class="s3">1</span>
+            <span class="s1">coeff = (</span><span class="s4">&quot;x^{0}&quot;</span><span class="s1">.format(id_count))</span>
+
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">= {0}{1}{2}+{3} - {4} = 0&quot;</span><span class="s1">.format(coeff</span><span class="s2">, </span><span class="s1">-ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] - ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">lamda[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">(-ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]) * (-ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">])</span><span class="s2">,</span>
+                                           <span class="s1">(-ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]) * (-ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">1</span><span class="s1">])))</span>
+<span class="s0">##</span>
+<span class="s0">## = x^2-74x+1360 - 1296 = 0</span>
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">= {0}{1}{2}+{3} = 0&quot;</span><span class="s1">.format(coeff</span><span class="s2">, </span><span class="s1">-ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] - ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">lamda[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s2">,</span>
+                                     <span class="s1">((-ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]) * (-ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">])) - ((-ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]) * (-ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]))))</span>
+<span class="s0">##</span>
+<span class="s0">## = x^2-74x+64 = 0</span>
+<span class="s1">factor1 = (-ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] - ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">])</span>
+
+<span class="s1">determinant = (((-ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]) * (-ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">])) - ((-ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]) * (-ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">1</span><span class="s1">])))</span>
+
+<span class="s1">factor1 = determinant - factor1</span>
+
+<span class="s1">print(factor1)</span>
+<span class="s0">## 138</span>
+<span class="s1">print(determinant)</span>
+<span class="s0">## 64</span>
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">Eigen Values:&quot;</span><span class="s1">)</span>
+<span class="s0">##</span>
+<span class="s0">## Eigen Values:</span>
+<span class="s1">print(</span><span class="s4">&quot;(x + ({0}))(x + ({1}))&quot;</span><span class="s1">.format(factor1</span><span class="s2">, </span><span class="s1">determinant))</span>
+<span class="s0">## (x + (138))(x + (64))</span>
+<span class="s1">print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">Eigen Vector&quot;</span><span class="s1">)</span>
+<span class="s0">##</span>
+<span class="s0">## Eigen Vector</span>
+<span class="s1">eval1 = ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] - (factor1)</span>
+<span class="s1">eval2 = ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">] - (factor1)</span>
+
+<span class="s1">print(eval1)</span>
+<span class="s0">## -104</span>
+<span class="s1">print(eval2)</span>
+<span class="s0">## -98</span>
+<span class="s1">eiganVector1 = ATA[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">1</span><span class="s1">] / eval2</span>
+
+<span class="s1">eiganVector2 = ATA[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] / eval2</span>
+
+<span class="s1">print(</span><span class="s4">&quot;Eigan vectors are: {0} and {1}&quot;</span><span class="s1">.format(eiganVector1</span><span class="s2">, </span><span class="s1">eiganVector2))</span>
+
+<span class="s0">## Eigan vectors are: 0.3673469387755102 and 0.3673469387755102</span>
+
+
+<span class="s0"># 3. Write a Python program to compute the determinant of an array.</span>
+<span class="s0"># Given Square Matrix</span>
+
+<span class="s1">A = ([[</span><span class="s3">5</span><span class="s2">, </span><span class="s1">-</span><span class="s3">3</span><span class="s1">]</span><span class="s2">,</span>
+      <span class="s1">[-</span><span class="s3">6</span><span class="s2">, </span><span class="s3">2</span><span class="s1">]])</span>
+
+<span class="s0"># Identity Matrix</span>
+<span class="s1">I = ([[</span><span class="s3">1</span><span class="s2">, </span><span class="s3">0</span><span class="s1">]</span><span class="s2">,</span>
+      <span class="s1">[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">1</span><span class="s1">]])</span>
+
+<span class="s0"># A * Identity Matrix</span>
+<span class="s1">AxI = ([[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">0</span><span class="s2">, </span><span class="s1">]</span><span class="s2">,</span>
+        <span class="s1">[</span><span class="s3">0</span><span class="s2">, </span><span class="s3">0</span><span class="s1">]])</span>
+
+<span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(A)):</span>
+    <span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(len(I[</span><span class="s3">0</span><span class="s1">])):</span>
+        <span class="s2">for </span><span class="s1">k </span><span class="s2">in </span><span class="s1">range(len(I)):</span>
+            <span class="s1">AxI[i][j] += A[i][k] * I[k][j]</span>
+
+<span class="s1">determinant = (AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] * AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">] - AxI[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] * AxI[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">1</span><span class="s1">])</span>
+
+<span class="s1">print(</span><span class="s4">&quot;Determinant: {0}&quot;</span><span class="s1">.format(determinant))</span>
+<span class="s0">## Determinant: -8</span></pre>
+</body>
+</html>
